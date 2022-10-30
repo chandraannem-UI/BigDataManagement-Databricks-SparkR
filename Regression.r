@@ -43,17 +43,13 @@ df_testing=dropna(df_testing)
 
 # COMMAND ----------
 
-model_rf = spark.randomForest(df_training, sale_dollars ~ zipcode + category_code + month_of_sale + year_of_sale, "regression", numTrees = 20, maxDepth = 5, handleInvalid = "skip" )
+model_rf = spark.randomForest(df_training, sale_dollars ~ county + category_code + month_of_sale + year_of_sale, "regression", numTrees = 20, maxDepth = 5, handleInvalid = "skip" )
 summary(model_rf)
 
 # COMMAND ----------
 
 output = predict(model_rf, df_testing)
 showDF(output,20)
-
-# COMMAND ----------
-
-
 
 # COMMAND ----------
 
@@ -65,8 +61,8 @@ showDF(select(output, alias(sqrt(avg((output$sale_dollars-output$prediction)^2))
 
 # COMMAND ----------
 
-showDF(select(output, alias(avg(abs(output$TIP_AMOUNT-output$prediction)),"MAE")))
+showDF(select(output, alias(avg(abs(output$sale_dollars-output$prediction)),"MAE")))
 
 # COMMAND ----------
 
-showDF(select(output, alias(avg(abs(output$TIP_AMOUNT-output$prediction)/abs(output$TIP_AMOUNT)), 'MAPE')))
+showDF(select(output, alias(avg(abs(output$sale_dollars-output$prediction)/abs(output$sale_dollars)), 'MAPE')))
