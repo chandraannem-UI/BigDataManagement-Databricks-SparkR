@@ -156,3 +156,7 @@ select distinct month_of_sale,year_of_sale from iowa_liquor_sales --where month_
 -- COMMAND ----------
 
 select count(*) from iowa_liquor_sales
+
+-- COMMAND ----------
+
+select count(distinct store_no) as total_num_store from iowa_liquor_sales

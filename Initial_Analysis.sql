@@ -22,7 +22,11 @@ select distinct county from iowa_liquor_sales
 
 -- COMMAND ----------
 
-select avg(sale_dollars) from iowa_liquor_sales group by county 
+select avg(sale_dollars) as avg_sale,county from iowa_liquor_sales group by county order by avg_sale desc
+
+-- COMMAND ----------
+
+select avg(sale_dollars) as avg_sale,store_location from iowa_liquor_sales group by store_location order by avg_sale desc
 
 -- COMMAND ----------
 
@@ -67,7 +71,9 @@ select count(distinct store_name) from iowa_liquor_sales
 
 -- COMMAND ----------
 
-select distinct item_desc,max(bottle_cost) as max_cost from iowa_liquor_sales group by item_desc order by max_cost desc limit 20
+select distinct item_desc,max(bottle_cost) as max_cost
+from iowa_liquor_sales 
+group by item_desc order by max_cost desc limit 10
 
 -- COMMAND ----------
 
@@ -105,4 +111,6 @@ select count(*) as sales_by_pack,pack from iowa_liquor_sales group by pack order
 
 -- COMMAND ----------
 
-select sum(sale_gallons) as gallons_sold,item_desc from iowa_liquor_sales group by item_desc order by gallons_sold desc limit 10
+select sum(sale_gallons) as gallons_sold,item_desc 
+from iowa_liquor_sales
+group by item_desc order by gallons_sold desc limit 10
