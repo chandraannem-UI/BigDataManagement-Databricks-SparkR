@@ -138,11 +138,39 @@ STORED AS TEXTFILE;
 
 -- COMMAND ----------
 
-INSERT OVERWRITE TABLE iowa_liquor_sales Partition (month_of_sale,year_of_sale)
-SELECT invoice_line_no, to_date(order_date,'MM/dd/yyyy'), store_no,   store_name,  address,  city,  zipcode,   store_location,  county_number,   upper(county),  category_code,  category_name,  
-vendor_no,  vendor_name,  itemno,   item_desc,  pack,  bottle_volume_ml,  bottle_cost,  bottle_retail,  sale_bottles,  sale_dollars,  sale_liters,  sale_gallons, 
-month(to_date(order_date,'MM/dd/yyyy')) as month_of_sale,year(to_date(order_date,'MM/dd/yyyy')) as year_of_sale 
-FROM iowa_liquor_sales_total where to_date(order_date,'MM/dd/yyyy')>'2020-08-31';
+INSERT
+  OVERWRITE TABLE iowa_liquor_sales Partition (month_of_sale, year_of_sale)
+SELECT
+  invoice_line_no,
+  to_date(order_date, 'MM/dd/yyyy'),
+  store_no,
+  store_name,
+  address,
+  city,
+  zipcode,
+  store_location,
+  county_number,
+  upper(county),
+  category_code,
+  category_name,
+  vendor_no,
+  vendor_name,
+  itemno,
+  item_desc,
+  pack,
+  bottle_volume_ml,
+  bottle_cost,
+  bottle_retail,
+  sale_bottles,
+  sale_dollars,
+  sale_liters,
+  sale_gallons,
+  month(to_date(order_date, 'MM/dd/yyyy')) as month_of_sale,
+  year(to_date(order_date, 'MM/dd/yyyy')) as year_of_sale
+FROM
+  iowa_liquor_sales_total
+where
+  to_date(order_date, 'MM/dd/yyyy') > '2020-08-31';
 
 -- COMMAND ----------
 

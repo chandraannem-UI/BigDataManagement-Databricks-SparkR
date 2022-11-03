@@ -15,6 +15,7 @@ library(SparkR)
 
 df_clus = sql("select * from iowa_liquor_sales")
 
+
 # COMMAND ----------
 
 df_clus=dropna(df_clus)
